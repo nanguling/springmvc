@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @RequestMapping:
@@ -107,6 +109,57 @@ public class MyController {
         student.setName("薇妹");
         student.setAge(15);
         return student;//会被框架转为json
+    }
+
+    /**
+     * 处理器方法返回是一个List集合，例如List<Student>
+     *
+     *返回对象框架的处理流程：
+     *  1.框架会把返回值List<Student>类型，调用框架中的ArrayList<HttpMessageConverter>中的每个类的canWrite方法
+     *    来检查哪个消息转换器接口的实现类能处理Student类型的数据---MappingJackson2HttpMessageConverter。
+     *  2.框架会调用实现类的write()方法--MappingJackson2HttpMessageConverter的write()方法
+     *    把studebt对象转为json数组，调用jackson中ObjectMapper实现
+     *    Content-Type: application/json;charset=utf-8
+     *  3.框架会调用@ResponseBody把得到的json结果输出给前端，ajax请求处理完成。
+     */
+    @ResponseBody
+    @RequestMapping(value = "/returnStudentAjaxArray.do")
+    public List<Student> doStudntJsonObjectArray(String  name, Integer age) throws IOException {
+        List<Student> list = new ArrayList<>();
+
+        //调用service，获取请求结果数据，Student对象就表示结果数据
+        Student student = new Student();
+        student.setName("薇妹");
+        student.setAge(15);
+        list.add(student);
+
+        student = new Student();
+        student.setName("薇姐");
+        student.setAge(14);
+        list.add(student);
+        return list;//会被框架转为json数组
+    }
+
+    /**
+     * 处理器方法返回的是String，String表示数据的，不是视图。
+     *
+     * 区分返回值String是数据还是视图，看有没有@ResponseBody注解
+     * 如果有@ResponseBody注解，返回String就是数据。反之就是视图。
+     *
+     * 默认使用“text/plain;charset=ISO-8859-1”作为contentType，导致中文有乱码
+     * 解决方案：给@RequestMapping增加一个属性 produces，使用这个属性来指定新的contentType。
+     *
+     * 返回对象框架的处理流程：
+     *  1.框架会把返回值String类型，调用框架中的ArrayList<HttpMessageConverter>中的每个类的canWrite方法
+     *    来检查哪个消息转换器接口的实现类能处理String类型的数据---StringHttpMessageConverter。
+     *  2.框架会调用实现类的write()方法--MappingJackson2HttpMessageConverter的write()方法
+     *    把字符串按照指定的编码来处理 text/plain;charset=ISO-8859-1
+     *  3.框架会调用@ResponseBody把得到的结果输出给前端，ajax请求处理完成。
+     */
+    @ResponseBody
+    @RequestMapping(value = "/returnStringData.do",produces = "text/plain;charset=utf-8")
+    public String doStringData(String name,Integer age) {
+        return "Hello SpringMVC 返回对象，表示数据";
     }
 
 }

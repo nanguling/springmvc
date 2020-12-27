@@ -20,6 +20,6 @@
         <!--后缀：视图文件的扩展名-->
         <property name="suffix" value=".jsp"/>
     </bean>
-    <!--没有注解驱动-->
+    <!--注解驱动-->
     <mvc:annotation-driven/>
 </beans>

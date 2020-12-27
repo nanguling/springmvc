@@ -10,17 +10,25 @@
                 //alert("btn click")
                 $.ajax({
                     //url:"returnVoidAjax.do",
-                    url:"returnStudentAjax.do",
+                    //url:"returnStudentAjax.do",
+                    //url:"returnStudentAjaxArray.do",
+                    url:"returnStringData.do",
                     data:{
                         name:"薇姐",
                         age:14
                     },
                     type:"post",
-                    dataType:"json",
+                    //dataType:"json",
+                    dataType:"text",
                     success:function (resp) {
                         //resp从服务器端返回的是json格式的字符串 {"name":"薇姐","age":14}
                         //jquery会把json字符串转为json对象，赋值给resp
-                        alert(resp.name+"  "+resp.age);
+                        //alert(resp.name+"  "+resp.age)
+                        //alert(resp[0].name+"  "+resp[0].age+" , "+resp[1].name+"  "+resp[1].age);
+                        /*$.each(resp,function (i,n) {
+                            alert(n.name+" "+n.age)
+                        })*/
+                        alert("返回的是文本数据:"+resp)
                     }
                 })
             })

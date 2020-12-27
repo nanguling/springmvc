@@ -1,0 +1,1 @@
+05_url-pattern使用斜杠：研究中央调度器的url-pattren设置为 “/”
