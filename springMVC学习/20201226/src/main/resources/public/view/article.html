@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章</title>
+    <script type="text/javascript" src="../js/jquery@3.3.1/jquery.js"></script>
+    <script type="text/javascript">
+        function getQueryVariable()
+        {
+            let json = {};
+            //window.location.search为queryString，?及之后的参数
+            if(window.location.search.indexOf("?") != -1){
+                let query = window.location.search.substring(1);
+                console.log(window.location.search)
+                let vars = query.split("&");
+                for (let i=0;i<vars.length;i++) {
+                    let pair = vars[i].split("=");
+                    json[pair[0]] = pair[1];
+                }
+            }
+            return json;
+        }
+        $(function () {
+            //console.log(JSON.stringify(getQueryVariable()))
+            //解析url参数
+            var json = getQueryVariable();
+            //定义请求参数
+            var data = {};
+            if (json.type == "modify") {
+                data.id = json.id;
+            }
+            $("#article_form").submit(function () {
+                //设置data的title和内容
+                data.title = $("#title").val();
+                data.content = $("#contect").val();
+                console.log(JSON.stringify(data))
+                $.ajax({
+                    url:json.type=="add"?"../data/articleAdd":"../data/articleModify",
+                    type:"post",
+                    contentType:"application/json",//请求数据类型
+                    data:data,
+                    dataType:"json",//响应数据类型
+                    success:function (res) {
+                        if (res.success) {
+                            alert("success")
+                        }else {
+                            alert("nonono")
+                        }
+                    },
+                    error:function (req,textStatus,error) {
+                        alert(req.status)
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <center>
+        <form id="article_form">
+        标题:<input type="text" id="title"><br>
+        <textarea id="contect" style="width: 555px;height: 333px"></textarea><br>
+            <input type="submit" value="提交" >
+        </form>
+    </center>
+</body>
+</html>

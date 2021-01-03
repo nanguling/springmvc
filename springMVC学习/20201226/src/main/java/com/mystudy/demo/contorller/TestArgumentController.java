@@ -26,8 +26,8 @@ public class TestArgumentController {
         return map;
     }
 
-    @PostMapping("/login")
-    public Object login(@RequestParam String username,@RequestParam String passward) {
+    @PostMapping("/login3")
+    public Object login3(@RequestParam String username,@RequestParam String passward) {
         log.debug("获取到请求路径参数:username=={},passward=={}",username,passward);
         Map<String,Object> map = new HashMap<>();
         map.put("ok",true);
