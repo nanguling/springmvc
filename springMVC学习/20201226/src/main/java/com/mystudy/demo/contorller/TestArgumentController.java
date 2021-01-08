@@ -1,5 +1,6 @@
 package com.mystudy.demo.contorller;
 
+import com.mystudy.demo.exception.AppException;
 import com.mystudy.demo.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,5 +84,16 @@ public class TestArgumentController {
         return map;
     }
 
+    @RequestMapping("/ex")
+    public Object ex(Integer i) {//模拟用户登录出错的情况
+        if (i == 1) {//用户登陆出错
+            throw new AppException("LOG444","用户名或密码错误");
+        }else {//用户登陆成功，但是自己写代码出现运行时异常
+            int res = i/0;
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("ok",true);
+        return map;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.mystudy.demo.contorller;
 
+import com.mystudy.demo.exception.AppException;
 import com.mystudy.demo.model.ResponseJson;
 import com.mystudy.demo.model.User;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +31,15 @@ public class LoginController {
             json.setCode("LOG444");
         }
         return json;
+    }
+
+    //
+    @RequestMapping("/login2")
+    public Object login2(User user) {
+        if ("abc".equals(user.getUsername())) {
+            return user;
+        }else {
+            throw new AppException("USERLOG444","用户登陆失败");
+        }
     }
 }
