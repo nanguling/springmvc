@@ -2,7 +2,7 @@ package com.mystudy.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mystudy.config.handler.LoginHandler;
-import com.mystudy.web.RequestResponseBodyMethodProcessorWrapper;
+import com.mystudy.config.web.RequestResponseBodyMethodProcessorWrapper;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
